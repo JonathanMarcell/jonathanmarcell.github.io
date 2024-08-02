@@ -1,0 +1,5 @@
+npm run build
+copy my-web/build/*
+to root
+
+(_app folder, favicon.png, and html page(s))

@@ -7,5 +7,5 @@
     export const fg_dark_color2="#094036";
 </script>
 <style>
-    
+
 </style>

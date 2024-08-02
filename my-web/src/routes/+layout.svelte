@@ -1,6 +1,7 @@
 <script lang="ts">
     import { base } from '$app/paths';
     import { page } from '$app/stores';
+    import  Global  from "./global.svelte";
 </script>
 <style>
     *{
