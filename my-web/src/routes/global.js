@@ -14,4 +14,5 @@ export default {
     fg_light_color2,
     fg_dark_color,
     fg_dark_color1,
+    
 }

@@ -1,6 +1,6 @@
 <script>
     import { base } from '$app/paths';
-	import * as global from "./global";
+	import * as global from "./global"; //custom file
 </script>
 <!-- <div class="absolute left-1/2 -translate-x-1/2 w-11/12 h-px" style="background-color:{global.fg_light_color2}"></div> -->
 <div class="flex h-screen -mt-16">

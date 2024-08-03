@@ -27,23 +27,24 @@
             {id:"id",value:"Bahasa"},
             {id:"jp",value:"日本語"},
         ];
-        
+    let defaultLangIndex=0;
     let query = new URLSearchParams($page.url.searchParams.toString());
-    let selectedLang : {id:string,value:string};
-    
+    export let selectedLang : {id:string,value:string};
+    refreshLanguage();
+
     // functions
     function changeLanguage(langId:string) {
         console.log('lang changed to '+langId);
         query = new URLSearchParams($page.url.searchParams.toString());
         query.set('lang', langId);                  
-        selectedLang=lang.findLast((x)=>x.id==langId)??lang[0];
+        selectedLang=lang.findLast((x)=>x.id==langId)??lang[defaultLangIndex];
         goto($page.url.pathname+`?${query.toString()}`);
         return null;
     }
 
     function refreshLanguage(){
         query = new URLSearchParams($page.url.searchParams.toString());                
-        selectedLang=lang.findLast((x)=>x.id==query.get('lang'))??lang[0];   
+        selectedLang=lang.findLast((x)=>x.id==query.get('lang'))??lang[defaultLangIndex];   
     }
     
     function goToHome() {       
@@ -55,30 +56,38 @@
         refreshLanguage();   
         goto(base+`/interactive-portfolio?${query.toString()}`);
     }
+
+    function debug(){
+        const prefix="00 ";
+        console.log(`${prefix}THIS IS DEBUG LOG`);
+        console.log(`${prefix}`);
+        console.log(`${prefix}`);
+    }
 </script>
 
 <!-- THIS IS NAVIGATOR PANE THAT ALWAYS ON TOP OF SCREEN -->
 <nav use:cssVariables={{bg_color, fg_light_color, fg_light_color1, fg_light_color2, fg_dark_color, fg_dark_color1}}>
     <row>        
-        <a class="link" href="#" on:click={()=>goToHome()}>Home</a>
-        <!-- {#if $page.url.pathname != base+"/"}
-        {:else} 
-            <div class="link currentPage">Home</div>
-        {/if} -->
+        <a class="link" href="#" on:click={()=>goToHome()}>Home            
+            {#if $page.url.pathname.split("?")[0] === base+"/"}
+                <div class="bottomliner"></div>
+            {/if}
+        </a>
         
-        <a class="link" href="#" on:click={()=>goToInteractivePortfolio()}>Interactive Portfolio</a>
-        <!-- {#if $page.url.pathname != base+"/interactive-portfolio"}
-        {:else} 
-            <div class="link currentPage">Interactive Portfolio</div>
-        {/if}   -->
-        <button class="mx-10" on:click={()=>console.log(query.get('lang'))}>
-            check
+        <a class="link" href="#" on:click={()=>goToInteractivePortfolio()}>Interactive Portfolio
+            {#if $page.url.pathname.split("?")[0] === base+"/interactive-portfolio"}
+                <div class="bottomliner"></div>
+            {/if}
+        </a>
+        <button class="mx-10" on:click={()=>debug()}>
+            debug
         </button>
         <Select.Root bind:selected={selectedLang}
-            onSelectedChange={(v) => {changeLanguage(v?.value??"en")}}
+            onSelectedChange={(v) => {
+                changeLanguage(v?.value??"en")}}
         >
             <Select.Trigger class="w-[150px] mt-3 ml-14 mr-2">
-                <Select.Value placeholder="Default"/>
+                <Select.Value placeholder={selectedLang.value}/>
             </Select.Trigger>
             <Select.Content>                    
                 <Select.Group>
@@ -119,6 +128,13 @@
     a:hover{
         color: var(--fg_light_color);   
     }    
+    .bottomliner{
+        height: 2px;
+        margin-top: -2px;
+        width: 100%;
+        background-color: var(--fg_light_color1);
+        /* margin-top: 1rem; */
+    }
     row{
         display:flex;
     }

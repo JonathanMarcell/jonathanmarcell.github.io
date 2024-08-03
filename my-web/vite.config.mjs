@@ -7,9 +7,9 @@ export default defineConfig({
 	optimizeDeps: {
 		include: ['pixi.js'],
 	  },
-	//   resolve: {
-	// 	alias: {
-	// 	  'pixi.js': path.resolve(__dirname, './node_modules/pixi.js/dist/browser/pixi.mjs')
-	// 	}
-	//   },
+	server: {
+		fs: {
+			allow: ["static/fonts"]
+		},
+	  },
 }) ;
