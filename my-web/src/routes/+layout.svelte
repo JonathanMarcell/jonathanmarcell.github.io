@@ -5,6 +5,7 @@
     import * as Select from "$lib/components/ui/select";
     import { bg_color, fg_light_color, fg_light_color1, fg_light_color2, fg_dark_color, fg_dark_color1} from "./global.js";
 	import { goto } from "$app/navigation";
+    import { beforeUpdate } from 'svelte';
 
     function cssVariables(node:any, variables:any) {
         setCssVariables(node, variables);
@@ -28,14 +29,18 @@
             {id:"jp",value:"日本語"},
         ];
     let defaultLangIndex=0;
-    let query = new URLSearchParams($page.url.searchParams.toString());
-    export let selectedLang : {id:string,value:string};
-    refreshLanguage();
+    export let selectedLang : {id:string,value:string}=lang[0];
+
+    let query;
+    beforeUpdate(() => {
+        query = new URLSearchParams($page.url.searchParams.toString());
+        refreshLanguage();
+    });
 
     // functions
     function changeLanguage(langId:string) {
         console.log('lang changed to '+langId);
-        query = new URLSearchParams($page.url.searchParams.toString());
+        // query = new URLSearchParams($page.url.searchParams.toString());
         query.set('lang', langId);                  
         selectedLang=lang.findLast((x)=>x.id==langId)??lang[defaultLangIndex];
         goto($page.url.pathname+`?${query.toString()}`);
@@ -43,7 +48,7 @@
     }
 
     function refreshLanguage(){
-        query = new URLSearchParams($page.url.searchParams.toString());                
+        // query = new URLSearchParams($page.url.searchParams.toString());                
         selectedLang=lang.findLast((x)=>x.id==query.get('lang'))??lang[defaultLangIndex];   
     }
     
@@ -68,20 +73,20 @@
 <!-- THIS IS NAVIGATOR PANE THAT ALWAYS ON TOP OF SCREEN -->
 <nav use:cssVariables={{bg_color, fg_light_color, fg_light_color1, fg_light_color2, fg_dark_color, fg_dark_color1}}>
     <row>        
-        <a class="link" href="#" on:click={()=>goToHome()}>Home            
+        <a class="link" href={'#'} on:click={()=>goToHome()}>Home            
             {#if $page.url.pathname.split("?")[0] === base+"/"}
                 <div class="bottomliner"></div>
             {/if}
         </a>
-        
-        <a class="link" href="#" on:click={()=>goToInteractivePortfolio()}>Interactive Portfolio
+        <!-- svelte-ignore a11y-missing-attribute -->
+        <a class="link" href={'#'} on:click={()=>goToInteractivePortfolio()}>Interactive Portfolio
             {#if $page.url.pathname.split("?")[0] === base+"/interactive-portfolio"}
                 <div class="bottomliner"></div>
             {/if}
         </a>
-        <button class="mx-10" on:click={()=>debug()}>
+        <!-- <button class="mx-10" on:click={()=>debug()}>
             debug
-        </button>
+        </button> -->
         <Select.Root bind:selected={selectedLang}
             onSelectedChange={(v) => {
                 changeLanguage(v?.value??"en")}}
