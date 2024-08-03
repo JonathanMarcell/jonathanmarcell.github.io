@@ -6,6 +6,12 @@ const config = {
 	content: ['./src/**/*.{html,js,svelte,ts}'],
 	safelist: ['dark'],
 	theme: {
+		screens: {
+			sm: '480px',
+			md: '768px',
+			lg: '976px',
+			xl: '1440px',
+		},
 		container: {
 			center: true,
 			padding: '2rem',
@@ -14,6 +20,10 @@ const config = {
 			}
 		},
 		extend: {
+			aspectRatio:{
+				'game-horiz':'4/3',
+				'game-verti':'3/4',
+			},
 			colors: {
 				border: 'hsl(var(--border) / <alpha-value>)',
 				input: 'hsl(var(--input) / <alpha-value>)',

@@ -5,7 +5,7 @@
 
     const info_control="[WASD]:Move, [E]:Confirm, [Space]:Back, [F11]:Fullscreen in browser";
     let info=info_control;
-    let w,h;
+    let w:number,h:number;
 
     onMount(() => {
 		console.log('width', w)
@@ -16,9 +16,9 @@
 	})
 </script>
 
-<div class="flex flex-col h-screen -mt-16">
+<div class="flex flex-col h-screen -mt-16 mx-1">
     <div id="game_window" bind:clientWidth={w} bind:clientHeight={h}
-    class="aspect-square md:w-auto md:h-4/5 w-full h-auto m-auto bg-slate-800 p-1 rounded-lg mt-20">        
+    class="aspect-game-verti md:aspect-game-horiz md:w-auto md:h-4/5 w-full h-auto m-auto bg-slate-800 p-1 rounded-lg mt-20">        
         <!-- <h1>This is second page (interactive portfolio here)</h1> -->
         <Game parentWidth={w} parentHeight={h}/>
     </div>
