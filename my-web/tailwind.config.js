@@ -21,8 +21,8 @@ const config = {
 		},
 		extend: {
 			aspectRatio:{
-				'game-horiz':'4/3',
-				'game-verti':'3/4',
+				gameHoriz:'4/3',
+				gameVerti:'3/4',
 			},
 			colors: {
 				border: 'hsl(var(--border) / <alpha-value>)',

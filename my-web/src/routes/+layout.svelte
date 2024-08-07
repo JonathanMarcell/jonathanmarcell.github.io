@@ -31,24 +31,22 @@
     let defaultLangIndex=0;
     export let selectedLang : {id:string,value:string}=lang[0];
 
-    let query;
-    beforeUpdate(() => {
+    let query : URLSearchParams;
+    beforeUpdate(() => { // cannot get params when preload is true (layout.js)
         query = new URLSearchParams($page.url.searchParams.toString());
         refreshLanguage();
     });
 
     // functions
     function changeLanguage(langId:string) {
-        console.log('lang changed to '+langId);
-        // query = new URLSearchParams($page.url.searchParams.toString());
+        console.log('language changed to '+langId);
         query.set('lang', langId);                  
         selectedLang=lang.findLast((x)=>x.id==langId)??lang[defaultLangIndex];
         goto($page.url.pathname+`?${query.toString()}`);
         return null;
     }
 
-    function refreshLanguage(){
-        // query = new URLSearchParams($page.url.searchParams.toString());                
+    function refreshLanguage(){               
         selectedLang=lang.findLast((x)=>x.id==query.get('lang'))??lang[defaultLangIndex];   
     }
     
